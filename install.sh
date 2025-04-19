@@ -10,6 +10,11 @@ fi
 sudo apt-get -y update
 sudo apt-get -y upgrade
 
+# Install Docker
+curl -s https://get.docker.com | sh
+sudo usermod -aG docker $(whoami)
+sudo systemctl enable docker
+
 # Add PHP PPA
 sudo add-apt-repository ppa:ondrej/php
 
