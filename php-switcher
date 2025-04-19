@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Find available PHP versions from /etc/php directory
+echo "Available PHP versions:"
+php_versions=$(ls /etc/php/ | sort -V)
+
+# Display available versions with numbers
+i=1
+for version in $php_versions; do
+    echo "$i) $version"
+    i=$((i+1))
+done
+
+# Ask user to select a version
+read -p "Select PHP version to switch to [1-$((i-1))]: " selection
+
+# Validate user input
+if [[ ! $selection =~ ^[0-9]+$ ]] || [ $selection -lt 1 ] || [ $selection -gt $((i-1)) ]; then
+    echo "Invalid selection. Exiting."
+    exit 1
+fi
+
+# Get the selected PHP version
+selected_version=$(echo "$php_versions" | sed -n "${selection}p")
+
+# Switch PHP version
+echo "Switching to PHP $selected_version..."
+sudo update-alternatives --set php /usr/bin/php$selected_version
+
+echo "PHP version switched to $selected_version"
+php -v
