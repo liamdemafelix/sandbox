@@ -33,7 +33,7 @@ sudo wget https://raw.githubusercontent.com/liamdemafelix/sandbox/refs/heads/mas
 # Adjust PHP settings
 sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/php.ini
 sudo sed -i 's/post_max_size = 8M/post_max_size = 100M/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/php.ini
-sudo sed -i 's/memory_limit = 128M/post_max_size = 512M/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/php.ini
+sudo sed -i 's/memory_limit = 128M/memory_limit = 512M/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/php.ini
 sudo sed -i 's/user = www-data/user = liam/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
 sudo sed -i 's/group = www-data/group = liam/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
 sudo sed -i 's/\;env\[HOSTNAME\]/env\[HOSTNAME\]/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
