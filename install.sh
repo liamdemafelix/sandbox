@@ -8,6 +8,7 @@ fi
 
 # Trigger sudo for the first time to stop asking for passwords
 sudo apt-get -y update
+sudo apt-get -y upgrade
 
 # Add PHP PPA
 sudo add-apt-repository ppa:ondrej/php
