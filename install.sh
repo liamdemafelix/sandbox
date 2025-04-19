@@ -25,11 +25,37 @@ sudo apt-get install -y mariadb-server
 
 # Set up Caddy
 sudo rm -f /etc/Caddyfile
+sudo wget https://raw.githubusercontent.com/liamdemafelix/sandbox/refs/heads/master/caddy/Caddyfile -O /etc/caddy/Caddyfile
+sudo mkdir -p /etc/caddy/snippets
+sudo wget https://raw.githubusercontent.com/liamdemafelix/sandbox/refs/heads/master/caddy/snippets/php -O /etc/caddy/snippets/php
 
+# Adjust PHP settings
+sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 100M/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/php.ini
+sudo sed -i 's/post_max_size = 8M/post_max_size = 100M/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/php.ini
+sudo sed -i 's/memory_limit = 128M/post_max_size = 512M/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/php.ini
+sudo sed -i 's/user = www-data/user = liam/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
+sudo sed -i 's/group = www-data/group = liam/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
+sudo sed -i 's/\;env\[HOSTNAME\]/env\[HOSTNAME\]/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
+sudo sed -i 's/\;env\[PATH\]/env\[PATH\]/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
+sudo sed -i 's/\;env\[TMP\]/env\[TMP\]/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
+sudo sed -i 's/\;env\[TMPDIR\]/env\[TMPDIR\]/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
+sudo sed -i 's/\;env\[TEMP\]/env\[TEMP\]/g' /etc/php/{5.6,7.2,8.2,8.3}/fpm/pool.d/www.conf
+
+# Configure and restart services
+sudo systemctl enable caddy
+sudo systemctl enable php{5.6,7.2,8.2,8.3}-fpm
+sudo systemctl enable mariadb
+sudo systemctl restart caddy
+sudo systemctl restart php{5.6,7.2,8.2,8.3}-fpm
+sudo systemctl restart mariadb
 
 # Install NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+nvm install --lts
 
 # Done
-echo "Setup done. Please restart your terminal session for the changes to take effect."
-exit 0
+echo "Setup done. Restarting system..."
+sudo reboot
