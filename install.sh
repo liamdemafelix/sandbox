@@ -57,6 +57,19 @@ sudo systemctl restart caddy
 sudo systemctl restart php{5.6,7.2,8.2,8.3}-fpm
 sudo systemctl restart mariadb
 
+# Set up composer
+wget https://getcomposer.org/download/latest-2.2.x/composer.phar -O /usr/local/bin/composer-legacy
+wget https://getcomposer.org/download/latest-2.x/composer.phar -O /usr/local/bin/composer.phar
+# Add PHP composer aliases
+sudo tee -a /etc/bash.bashrc > /dev/null << 'EOT'
+
+# PHP Composer version aliases
+alias php5.6-composer='/usr/bin/php5.6 /usr/local/bin/composer-legacy'
+alias php7.2-composer='/usr/bin/php7.2 /usr/local/bin/composer.phar'
+alias php8.2-composer='/usr/bin/php8.2 /usr/local/bin/composer.phar'
+alias php8.3-composer='/usr/bin/php8.3 /usr/local/bin/composer.phar'
+EOT
+
 # Install NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
