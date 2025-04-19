@@ -70,6 +70,10 @@ alias php8.2-composer='/usr/bin/php8.2 /usr/local/bin/composer.phar'
 alias php8.3-composer='/usr/bin/php8.3 /usr/local/bin/composer.phar'
 EOT
 
+# Set up the Composer shim
+sudo wget https://raw.githubusercontent.com/liamdemafelix/sandbox/refs/heads/master/composer-shim -O /usr/local/bin/composer
+sudo chmod +x /usr/local/bin/composer
+
 # Set up PHP switcher
 sudo wget https://raw.githubusercontent.com/liamdemafelix/sandbox/refs/heads/master/php-switcher -O /usr/local/bin/php-switcher
 sudo chmod +x /usr/local/bin/php-switcher
