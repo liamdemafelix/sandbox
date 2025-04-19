@@ -70,6 +70,10 @@ alias php8.2-composer='/usr/bin/php8.2 /usr/local/bin/composer.phar'
 alias php8.3-composer='/usr/bin/php8.3 /usr/local/bin/composer.phar'
 EOT
 
+# Set up PHP switcher
+sudo wget https://raw.githubusercontent.com/liamdemafelix/sandbox/refs/heads/master/php-switcher -O /usr/local/bin/php-switcher
+sudo chmod +x /usr/local/bin/php-switcher
+
 # Install NVM
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
