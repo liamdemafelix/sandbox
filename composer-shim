@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Get the active PHP version (e.g., 5.6, 7.4, 8.1)
+active_php=$(php -r 'echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION;')
+
+# Decide which composer binary to use
+if [[ "$active_php" == "5.6" ]]; then
+    exec /usr/bin/php5.6 /usr/local/bin/composer-legacy "$@"
+else
+    exec /usr/bin/php$active_php /usr/local/bin/composer.phar "$@"
+fi
